@@ -2,50 +2,61 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace PlotNET
 {
     public class Plotter
     {
-        private string jsUrl = "https://cdn.plot.ly/plotly-latest.min.js";
+        private string _jsUrl = "https://cdn.plot.ly/plotly-latest.min.js";
 
-        public string Plot(string fileName = "")
+        private string _html;
+
+
+        public Plotter Plot(string fileName)
         {
             var html = RenderHeader();
-            html += RenderBody();
-            html += RenderJS();
-
-            if (!string.IsNullOrEmpty(fileName))
-                File.WriteAllText(fileName + ".html", html);
-
-            return html;
+            var divClientID = "plot-" + Math.Abs(Guid.NewGuid().ToString().GetHashCode());
+            html += RenderBody(divClientID);
+            html += RenderJS(divClientID);
+            _html = $"<iframe border=\"0\" style=\"border:0px;\" src=\"{fileName}\"></iframe>";
+            File.WriteAllText(Path.Combine(AppContext.BaseDirectory, fileName), html, Encoding.UTF8);
+            return this;
         }
 
         private string RenderHeader()
         {
-            return $"<head>" +
-                $"<script src=\"{jsUrl}\"></script>" +
-                $"</head>";
+            return $"<script src=\"{_jsUrl}\"></script>";
         }
 
-        private string RenderBody()
+        private string RenderBody(string divClientID)
         {
-            return $"<div id=\"tester\" style=\"width: 90 %; height: 250px;\"></div>";
+            return $"<div id=\"{divClientID}\"></div>";
         }
 
-        private string RenderJS()
+        private string RenderJS(string divClientID)
         {
             return @"<script>
+                        var data = [
+                            {
+                                x: ['giraffes', 'orangutans', 'monkeys'],
+                                y: [20, 14, 23],
+                                type: 'bar'
+                            }
+                        ];
 
-                       TESTER = document.getElementById('tester');
+                        Plotly.newPlot('" + divClientID + "', data);</script>";
+        }
 
-                        Plotly.plot(TESTER, [{
-                        x: [1, 2, 3, 4, 5],
-                        y: [1, 2, 4, 8, 16] }], {
-                        margin: { t: 0 }
-                        }, { showSendToCloud: true} );
-
-                    </script>";
+        public JObject Show()
+        {
+            return new JObject {                
+                {
+                    "data", new JObject {
+                        { "text/html", _html }
+                    }
+                }
+            };
         }
     }
 }

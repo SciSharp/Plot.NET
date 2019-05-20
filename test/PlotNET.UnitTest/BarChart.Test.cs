@@ -9,7 +9,7 @@ namespace PlotNET.UnitTest
         public void TestMethod1()
         {
             var plotter = new Plotter();
-            plotter.Plot("TestMethod1");
+            plotter.Plot("Test");
         }
     }
 }
