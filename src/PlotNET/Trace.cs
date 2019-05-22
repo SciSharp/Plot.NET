@@ -10,23 +10,51 @@ namespace PlotNET
     public class Trace
     {
         public Trace(float[] xValues, float[] yValues)
+            : this(xValues, yValues, ChartType.Scatter)
         {
-            XValues = xValues;
-            YValues = yValues;
-            Type = "scatter";
+
         }
 
         public Trace(int[] xValues, int[] yValues)
+            : this(xValues.Select(v => (float)v).ToArray(), yValues.Select(v => (float)v).ToArray(), ChartType.Scatter)
         {
-            XValues = xValues.Select(v => (float)v).ToArray();
-            YValues = yValues.Select(v => (float)v).ToArray();
-            Type = "scatter";
+
         }
+
+        public Trace(string[] labels, float[] yValues, ChartType type)
+        {
+            Labels = labels;
+            YValues = yValues;
+            Type = type;
+        }
+
+        public Trace(string[] labels, int[] yValues, ChartType type)
+            : this(labels, yValues.Select(v => (float)v).ToArray(), type)
+        {
+
+        }
+
+        public Trace(float[] xValues, float[] yValues, ChartType type)
+        {
+            XValues = xValues;
+            YValues = yValues;
+            Type = type;
+        }
+
+        public Trace(int[] xValues, int[] yValues, ChartType type)
+            : this(xValues.Select(v => (float)v).ToArray(), yValues.Select(v => (float)v).ToArray(), type)
+        {
+
+        }
+
+        public string Name { get; set; }
 
         public float[] XValues { get; set; }
 
         public float[] YValues { get; set; }
 
-        public string Type { get; set; }
+        public string[] Labels { get; set; }
+
+        public ChartType Type { get; set; }
     }
 }

@@ -9,9 +9,11 @@ namespace PlotNET.UnitTest
         public void TestMethod1()
         {
             var plotter = new Plotter();
+            
             plotter.Plot(
                 new [] { "giraffes", "orangutans", "monkeys" },
-                new [] { 20f, 14f, 23f });
+                new [] { 20f, 14f, 23f },
+                ChartType.Bar);
         }
     }
 }

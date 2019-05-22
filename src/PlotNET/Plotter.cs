@@ -11,84 +11,35 @@ namespace PlotNET
     {
         private string _jsUrl = "https://cdn.plot.ly/plotly-latest.min.js";
 
-        private string[] _labels;
-
-        private float[] _xValues;
-
-        private float[] _yValues;
-
         private List<Trace> _traces = new List<Trace>();
 
-        public Plotter Plot(float[] xValues, float[] yValues)
+        public Plotter Plot(float[] xValues, float[] yValues, ChartType type = ChartType.Bar, string name = null)
         {
-            _xValues = xValues;
-            _yValues = yValues;
+            _traces.Add(new Trace(xValues, yValues, type) { Name = name });
             return this;
         }
 
-        public Plotter Plot(int[] xValues, int[] yValues)
+        public Plotter Plot(int[] xValues, int[] yValues, ChartType type = ChartType.Bar, string name = null)
         {
-            return Plot(xValues.Select(v => (float)v).ToArray(),
-                yValues.Select(v => (float)v).ToArray());
-        }
-
-        public Plotter Plot(string[] labels, float[] yValues)
-        {
-            _labels = labels;
-            _yValues = yValues;
+            _traces.Add(new Trace(xValues, yValues, type) { Name = name });
             return this;
         }
 
-        public Plotter Plot(string[] labels, int[] yValues)
+        public Plotter Plot(string[] labels, float[] yValues, ChartType type = ChartType.Bar, string name = null)
         {
-            return Plot(labels, yValues.Select(v => (float)v).ToArray());
-        }
-
-        public Plotter Trace(int[] xValues, int[] yValues)
-        {
-            _traces.Add(new Trace(xValues, yValues));
+            _traces.Add(new Trace(labels, yValues, type) { Name = name });
             return this;
         }
 
-        public Plotter Labels(string[] labels)
+        public Plotter Plot(string[] labels, int[] yValues, ChartType type = ChartType.Bar, string name = null)
         {
-            _labels = labels;
+            _traces.Add(new Trace(labels, yValues, type) { Name = name });
             return this;
         }
 
-        public Plotter X(float[] values)
+        public Plotter Trace(int[] xValues, int[] yValues, ChartType type = ChartType.Bar, string name = null)
         {
-            _xValues = values;
-            return this;
-        }
-
-        public Plotter X(int[] values)
-        {
-            return X(values.Select(v => (float)v).ToArray());
-        }
-
-        public Plotter Y(float[] values)
-        {
-            _yValues = values;
-            return this;
-        }
-
-        public Plotter Y(int[] values)
-        {
-            return Y(values.Select(v => (float)v).ToArray());
-        }
-
-        public Plotter Values(float[] xValues, float[] yValues)
-        {
-            _xValues = xValues;
-            _yValues = yValues;
-            return this;
-        }
-
-        public Plotter Values(string[] labels, float[] yValues)
-        {
-            _labels = labels;
-            _yValues = yValues;
+            _traces.Add(new Trace(xValues, yValues, type) { Name = name });
             return this;
         }
 
@@ -102,38 +53,30 @@ namespace PlotNET
             return $"<div id=\"{divClientID}\"></div>";
         }
 
-        private string GetDataByXY()
-        {
-            var x = _labels != null ?
-                string.Join(",", _labels.Select(l => "'" + l  + "'"))
-                : string.Join(",", _xValues);
-
-            var y = string.Join(",", _yValues);
-
-            return @"[
-                            {
-                                x: [" + x + @"],
-                                y: [" + y +  @"],
-                                type: 'bar'
-                            }
-                        ];";
-        }
-
         private string GetDataByTraces()
         {
             return "[" + string.Join(",", _traces.Select(t =>
             {
+                var xTexts = t.XValues != null ? string.Join(",", t.XValues) : string.Join(",", t.Labels.Select(l => "'" + l  + "'"));
+                var nameNode = string.Empty;
+                
+                if (!string.IsNullOrEmpty(t.Name))
+                {
+                    nameNode = @",
+                        name: '" + t.Name + "'";
+                }
+
                 return @"{
-                    x: [" + string.Join(",", t.XValues) + @"],
+                    x: [" + xTexts + @"],
                     y: [" + string.Join(",", t.YValues) + @"],
-                    type: '" + t.Type +  @"'
+                    type: '" + t.Type.ToString().ToLower() +  @"'" + nameNode + @"
                 }";
             })) + "]";
         }
 
         private string RenderJS(string divClientID)
         {
-            var data = _traces.Any() ? GetDataByTraces() : GetDataByXY();
+            var data = GetDataByTraces();
 
             return @"<script>
                         var data = " + data + @";
