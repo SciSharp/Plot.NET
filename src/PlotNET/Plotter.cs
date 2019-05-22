@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json.Linq;
+using NumSharp;
 
 namespace PlotNET
 {
@@ -12,6 +13,12 @@ namespace PlotNET
         private string _jsUrl = "https://cdn.plot.ly/plotly-latest.min.js";
 
         private List<Trace> _traces = new List<Trace>();
+
+        public Plotter Plot(NDArray xValues, NDArray yValues, ChartType type = ChartType.Bar, string name = null)
+        {
+            _traces.Add(new Trace(xValues, yValues, type) { Name = name });
+            return this;
+        }
 
         public Plotter Plot(float[] xValues, float[] yValues, ChartType type = ChartType.Bar, string name = null)
         {
@@ -22,6 +29,12 @@ namespace PlotNET
         public Plotter Plot(int[] xValues, int[] yValues, ChartType type = ChartType.Bar, string name = null)
         {
             _traces.Add(new Trace(xValues, yValues, type) { Name = name });
+            return this;
+        }
+
+        public Plotter Plot(string[] labels, NDArray yValues, ChartType type = ChartType.Bar, string name = null)
+        {
+            _traces.Add(new Trace(labels, yValues, type) { Name = name });
             return this;
         }
 
@@ -66,10 +79,21 @@ namespace PlotNET
                         name: '" + t.Name + "'";
                 }
 
+                var modeNode = string.Empty;
+
+                if (!string.IsNullOrEmpty(t.Mode))
+                {
+                    modeNode = @",
+                        mode: '" + t.Mode + "'";
+                }
+
+
                 return @"{
                     x: [" + xTexts + @"],
                     y: [" + string.Join(",", t.YValues) + @"],
-                    type: '" + t.Type.ToString().ToLower() +  @"'" + nameNode + @"
+                    type: '" + t.Type.ToString().ToLower()
+                    +  @"'" + nameNode + 
+                    modeNode + @"
                 }";
             })) + "]";
         }

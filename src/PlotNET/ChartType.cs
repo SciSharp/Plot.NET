@@ -10,6 +10,7 @@ namespace PlotNET
     public enum ChartType
     {
         Bar,
-        Scatter
+        Scatter,
+        Dot
     }
 }
