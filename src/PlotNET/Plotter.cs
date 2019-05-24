@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using NumSharp;
+using ICSharpCore.Primitives;
 
 namespace PlotNET
 {
@@ -49,13 +50,7 @@ namespace PlotNET
             _traces.Add(new Trace(labels, yValues, type) { Name = name });
             return this;
         }
-
-        public Plotter Trace(int[] xValues, int[] yValues, ChartType type = ChartType.Bar, string name = null)
-        {
-            _traces.Add(new Trace(xValues, yValues, type) { Name = name });
-            return this;
-        }
-
+        
         private string RenderHeader()
         {
             return $"<script src=\"{_jsUrl}\"></script>";
@@ -108,12 +103,12 @@ namespace PlotNET
                     </script>";
         }
 
-        public JObject Show()
+        public void Show()
         {
-            return Show(0, 0);
+            Show(0, 0);
         }
 
-        public JObject Show(int width, int height)
+        public void Show(int width, int height)
         {
             var html = RenderHeader();
             var divClientID = "plot-" + Math.Abs(Guid.NewGuid().ToString().GetHashCode());
@@ -125,14 +120,14 @@ namespace PlotNET
 
             var strWidth = width == 0 ? "100%" : width.ToString() + "px";
             var strHeight = height == 0 ? "100%" : height.ToString() + "px";
-            
-            return new JObject {                
+
+            DisplayDataEmitter.Emit(new DisplayData
+            {
+                Data =  new JObject
                 {
-                    "data", new JObject {
-                        { "text/html", $"<iframe border=\"0\" style=\"border:0px;width:{strWidth};height:{strHeight};\" src=\"{fileName}\"></iframe>" }
-                    }
+                    { "text/html", $"<iframe border=\"0\" style=\"border:0px;width:{strWidth};height:{strHeight};\" src=\"{fileName}\"></iframe>" }
                 }
-            };
+            });
         }
     }
 }
