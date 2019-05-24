@@ -50,7 +50,7 @@ namespace PlotNET
             _traces.Add(new Trace(labels, yValues, type) { Name = name });
             return this;
         }
-        
+
         private string RenderHeader()
         {
             return $"<script src=\"{_jsUrl}\"></script>";
@@ -128,6 +128,8 @@ namespace PlotNET
                     { "text/html", $"<iframe border=\"0\" style=\"border:0px;width:{strWidth};height:{strHeight};\" src=\"{fileName}\"></iframe>" }
                 }
             });
+
+            _traces.Clear();
         }
     }
 }
