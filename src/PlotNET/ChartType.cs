@@ -11,6 +11,5 @@ namespace PlotNET
     {
         Bar,
         Scatter,
-        Dot
     }
 }

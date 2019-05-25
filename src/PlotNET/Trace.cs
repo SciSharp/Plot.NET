@@ -58,12 +58,6 @@ namespace PlotNET
             XValues = xValues;
             YValues = yValues;
             Type = type;
-
-            if (type == ChartType.Dot)
-            {
-                Mode = "markers";
-                Type = ChartType.Scatter;
-            }
         }
 
         public Trace(int[] xValues, int[] yValues, ChartType type)

@@ -15,7 +15,7 @@ namespace PlotNET
 
         private List<Trace> _traces = new List<Trace>();
 
-        public Plotter Plot(NDArray xValues, NDArray yValues, ChartType type = ChartType.Bar, string name = null, string mode = null)
+        public Plotter Plot(NDArray xValues, NDArray yValues, string name, ChartType type = ChartType.Bar, string mode = null)
         {
             _traces.Add(new Trace(xValues, yValues, type)
             {
@@ -25,7 +25,7 @@ namespace PlotNET
             return this;
         }
 
-        public Plotter Plot(float[] xValues, float[] yValues, ChartType type = ChartType.Bar, string name = null, string mode = null)
+        public Plotter Plot(float[] xValues, float[] yValues, string name, ChartType type = ChartType.Bar, string mode = null)
         {
             _traces.Add(new Trace(xValues, yValues, type)
             {
@@ -35,7 +35,7 @@ namespace PlotNET
             return this;
         }
 
-        public Plotter Plot(int[] xValues, int[] yValues, ChartType type = ChartType.Bar, string name = null, string mode = null)
+        public Plotter Plot(int[] xValues, int[] yValues, string name, ChartType type = ChartType.Bar, string mode = null)
         {
             _traces.Add(new Trace(xValues, yValues, type)
             {
@@ -45,7 +45,7 @@ namespace PlotNET
             return this;
         }
 
-        public Plotter Plot(string[] labels, NDArray yValues, ChartType type = ChartType.Bar, string name = null, string mode = null)
+        public Plotter Plot(string[] labels, NDArray yValues, string name, ChartType type = ChartType.Bar, string mode = null)
         {
             _traces.Add(new Trace(labels, yValues, type)
             {
@@ -55,7 +55,7 @@ namespace PlotNET
             return this;
         }
 
-        public Plotter Plot(string[] labels, float[] yValues, ChartType type = ChartType.Bar, string name = null, string mode = null)
+        public Plotter Plot(string[] labels, float[] yValues, string name, ChartType type = ChartType.Bar, string mode = null)
         {
             _traces.Add(new Trace(labels, yValues, type)
             {
@@ -65,7 +65,7 @@ namespace PlotNET
             return this;
         }
 
-        public Plotter Plot(string[] labels, int[] yValues, ChartType type = ChartType.Bar, string name = null, string mode = null)
+        public Plotter Plot(string[] labels, int[] yValues, string name, ChartType type = ChartType.Bar, string mode = null)
         {
             _traces.Add(new Trace(labels, yValues, type)
             {
@@ -123,13 +123,20 @@ namespace PlotNET
             })) + "]";
         }
 
-        private string RenderJS(string divClientID)
+        private string RenderJS(string divClientID, int width, int height)
         {
             var data = GetDataByTraces();
+            
+            var strWidth = @",
+                    width: " + (width - 20) + "," + @"
+                    height: " + (height - 20);
 
             return @"<script>
                         var data = " + data + @";
-                        Plotly.newPlot('" + divClientID + @"', data, { margin: { t: 0, l: 0, r: 0, b: 0 } });
+                        Plotly.newPlot('" + divClientID + @"', data,
+                            {
+                                margin: { t: 5, l: 30, r: 5, b: 30 }" + strWidth + @"
+                            });
                     </script>";
         }
 
@@ -140,11 +147,25 @@ namespace PlotNET
 
         public void Show(int width, int height)
         {
+            if (width <= 0 && height <= 0)
+            {
+                width = 800;
+                height = 500;
+            }
+            else if (width > 0 && height <= 0)
+            {
+                height = (width / 8) * 5;
+            }
+            else if (height > 0 && width <= 0)
+            {
+                width = (height / 5) * 8;
+            }
+
             var html = RenderHeader();
             var divClientID = "plot-" + Math.Abs(Guid.NewGuid().ToString().GetHashCode());
             var fileName = divClientID + ".html";
             html += RenderBody(divClientID);
-            html += RenderJS(divClientID);
+            html += RenderJS(divClientID, width, height);
 
             File.WriteAllText(Path.Combine(AppContext.BaseDirectory, fileName), html, Encoding.UTF8);
 
