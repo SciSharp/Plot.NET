@@ -15,39 +15,69 @@ namespace PlotNET
 
         private List<Trace> _traces = new List<Trace>();
 
-        public Plotter Plot(NDArray xValues, NDArray yValues, ChartType type = ChartType.Bar, string name = null)
+        public Plotter Plot(NDArray xValues, NDArray yValues, ChartType type = ChartType.Bar, string name = null, string mode = null)
         {
-            _traces.Add(new Trace(xValues, yValues, type) { Name = name });
+            _traces.Add(new Trace(xValues, yValues, type)
+            {
+                Name = name,
+                Mode = mode
+            });
             return this;
         }
 
-        public Plotter Plot(float[] xValues, float[] yValues, ChartType type = ChartType.Bar, string name = null)
+        public Plotter Plot(float[] xValues, float[] yValues, ChartType type = ChartType.Bar, string name = null, string mode = null)
         {
-            _traces.Add(new Trace(xValues, yValues, type) { Name = name });
+            _traces.Add(new Trace(xValues, yValues, type)
+            {
+                Name = name,
+                Mode = mode
+            });
             return this;
         }
 
-        public Plotter Plot(int[] xValues, int[] yValues, ChartType type = ChartType.Bar, string name = null)
+        public Plotter Plot(int[] xValues, int[] yValues, ChartType type = ChartType.Bar, string name = null, string mode = null)
         {
-            _traces.Add(new Trace(xValues, yValues, type) { Name = name });
+            _traces.Add(new Trace(xValues, yValues, type)
+            {
+                Name = name,
+                Mode = mode
+            });
             return this;
         }
 
-        public Plotter Plot(string[] labels, NDArray yValues, ChartType type = ChartType.Bar, string name = null)
+        public Plotter Plot(string[] labels, NDArray yValues, ChartType type = ChartType.Bar, string name = null, string mode = null)
         {
-            _traces.Add(new Trace(labels, yValues, type) { Name = name });
+            _traces.Add(new Trace(labels, yValues, type)
+            {
+                Name = name,
+                Mode = mode
+            });
             return this;
         }
 
-        public Plotter Plot(string[] labels, float[] yValues, ChartType type = ChartType.Bar, string name = null)
+        public Plotter Plot(string[] labels, float[] yValues, ChartType type = ChartType.Bar, string name = null, string mode = null)
         {
-            _traces.Add(new Trace(labels, yValues, type) { Name = name });
+            _traces.Add(new Trace(labels, yValues, type)
+            {
+                Name = name,
+                Mode = mode
+            });
             return this;
         }
 
-        public Plotter Plot(string[] labels, int[] yValues, ChartType type = ChartType.Bar, string name = null)
+        public Plotter Plot(string[] labels, int[] yValues, ChartType type = ChartType.Bar, string name = null, string mode = null)
         {
-            _traces.Add(new Trace(labels, yValues, type) { Name = name });
+            _traces.Add(new Trace(labels, yValues, type)
+            {
+                Name = name,
+                Mode = mode
+            });
+            return this;
+        }
+
+        public Plotter Plot(Trace trace)
+        {
+            _traces.Add(trace);
             return this;
         }
 
@@ -99,7 +129,7 @@ namespace PlotNET
 
             return @"<script>
                         var data = " + data + @";
-                        Plotly.newPlot('" + divClientID + @"', data);
+                        Plotly.newPlot('" + divClientID + @"', data, { margin: { t: 0, l: 0, r: 0, b: 0 } });
                     </script>";
         }
 
