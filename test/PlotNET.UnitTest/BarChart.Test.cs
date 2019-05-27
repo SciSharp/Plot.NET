@@ -13,7 +13,7 @@ namespace PlotNET.UnitTest
             plotter.Plot(
                 new [] { "giraffes", "orangutans", "monkeys" },
                 new [] { 20f, 14f, 23f },
-                ChartType.Bar);
+                "Test Chart", ChartType.Bar);
         }
     }
 }
