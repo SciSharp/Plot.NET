@@ -13,7 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
-    <PackageReference Include="NumSharp" Version="0.10.6" />
-    <PackageReference Include="ICSharpCore.Primitives" Version="0.2.2" />
+    <PackageReference Include="NumSharp" Version="0.20.4" />
+    <PackageReference Include="ICSharpCore.Primitives" Version="0.2.4" />
   </ItemGroup>
 </Project>
