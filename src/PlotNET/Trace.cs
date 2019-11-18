@@ -17,7 +17,7 @@ namespace PlotNET
         }
 
         public Trace(NDArray xValues, NDArray yValues)
-            : this(xValues.Data<float>(), yValues.Data<float>(), ChartType.Scatter)
+            : this(xValues.Data<float>().ToArray(), yValues.Data<float>().ToArray(), ChartType.Scatter)
         {
 
         }
@@ -29,7 +29,7 @@ namespace PlotNET
         }
 
         public Trace(string[] labels, NDArray yValues, ChartType type)
-            : this(labels, yValues.Data<float>(), type)
+            : this(labels, yValues.Data<float>().ToArray(), type)
         {
 
         }
@@ -48,7 +48,7 @@ namespace PlotNET
         }
 
         public Trace(NDArray xValues, NDArray yValues, ChartType type)
-            : this(xValues.Data<float>(), yValues.Data<float>(), type)
+            : this(xValues.Data<float>().ToArray(), yValues.Data<float>().ToArray(), type)
         {
 
         }
