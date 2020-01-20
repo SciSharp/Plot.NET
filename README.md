@@ -1,6 +1,8 @@
 # Plot.NET
 Plot data as HTML
 
+[![Join the chat at https://gitter.im/publiclab/publiclab](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sci-sharp/community) [![NuGet](https://img.shields.io/nuget/dt/PlotNET.svg)](https://www.nuget.org/packages/PlotNET)
+
 Convert data into `plotly.js` compatible format and generate an HTML showing in any browser.
 
 The API keep same as `matplotlib`.
