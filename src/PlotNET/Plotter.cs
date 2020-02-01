@@ -167,7 +167,7 @@ namespace PlotNET
             html += RenderBody(divClientID);
             html += RenderJS(divClientID, width, height);
 
-            File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), fileName), html, Encoding.UTF8);
+            File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), fileName), html, Encoding.UTF8);
 
             var strWidth = width == 0 ? "100%" : width.ToString() + "px";
             var strHeight = height == 0 ? "100%" : height.ToString() + "px";
