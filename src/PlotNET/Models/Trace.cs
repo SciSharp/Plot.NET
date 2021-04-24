@@ -6,7 +6,7 @@ using System.Text;
 using Newtonsoft.Json.Linq;
 using NumSharp;
 
-namespace PlotNET
+namespace PlotNET.Models
 {
     public class Trace
     {
