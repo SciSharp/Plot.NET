@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
-using NumSharp;
 using PlotNET.Models;
+using Tensorflow;
 
 namespace PlotNET
 {
@@ -13,7 +13,7 @@ namespace PlotNET
         {
             _layout.YAxis = new AxisElement
             {
-                Range = shape.Dimensions
+                Range = shape.as_int_list()
             };
         }
     }

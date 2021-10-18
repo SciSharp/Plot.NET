@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json.Linq;
-using NumSharp;
+using Tensorflow.NumPy;
 
 namespace PlotNET.Models
 {
@@ -17,7 +17,7 @@ namespace PlotNET.Models
         }
 
         public Trace(NDArray xValues, NDArray yValues)
-            : this(xValues.Data<float>().ToArray(), yValues.Data<float>().ToArray(), ChartType.Scatter)
+            : this(xValues.ToArray<float>(), yValues.ToArray<float>(), ChartType.Scatter)
         {
 
         }
@@ -29,7 +29,7 @@ namespace PlotNET.Models
         }
 
         public Trace(string[] labels, NDArray yValues, ChartType type)
-            : this(labels, yValues.Data<float>().ToArray(), type)
+            : this(labels, yValues.ToArray<float>(), type)
         {
 
         }
@@ -48,7 +48,7 @@ namespace PlotNET.Models
         }
 
         public Trace(NDArray xValues, NDArray yValues, ChartType type)
-            : this(xValues.Data<float>().ToArray(), yValues.Data<float>().ToArray(), type)
+            : this(xValues.ToArray<float>(), yValues.ToArray<float>(), type)
         {
 
         }

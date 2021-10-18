@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using NumSharp;
+using Tensorflow.NumPy;
 using PlotNET.Models;
 
 namespace PlotNET

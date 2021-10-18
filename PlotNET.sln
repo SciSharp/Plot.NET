@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.421
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlotNET", "src\PlotNET\PlotNET.csproj", "{AF57E136-07E7-4442-BE43-35F8C36A7C02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlotNET.UnitTest", "test\PlotNET.UnitTest\PlotNET.UnitTest.csproj", "{0C4833CD-73BC-4969-8C7A-96A611DD0EBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlotNET.UnitTest", "test\PlotNET.UnitTest\PlotNET.UnitTest.csproj", "{0C4833CD-73BC-4969-8C7A-96A611DD0EBC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pandas.Net", "..\Pandas.NET\src\Pandas.NET\Pandas.Net.csproj", "{803221B0-4FB3-4EF6-9D17-874603946F4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0C4833CD-73BC-4969-8C7A-96A611DD0EBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C4833CD-73BC-4969-8C7A-96A611DD0EBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C4833CD-73BC-4969-8C7A-96A611DD0EBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{803221B0-4FB3-4EF6-9D17-874603946F4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{803221B0-4FB3-4EF6-9D17-874603946F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{803221B0-4FB3-4EF6-9D17-874603946F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{803221B0-4FB3-4EF6-9D17-874603946F4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

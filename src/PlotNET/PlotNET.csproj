@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.2.0</Version>
+    <Version>0.3.0</Version>
     <Description>.NET wrapper of plotly.js for ICSharpCore</Description>
     <Copyright>Apache 2.0</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
@@ -13,9 +13,12 @@
     <UserSecretsId>2dc1458f-0a3b-40f9-902b-4ff02d6b2a19</UserSecretsId>
     <PackageReleaseNotes>Added plot.ylim.</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyVersion>0.3.0.0</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NumSharp" Version="0.30.0" />
     <PackageReference Include="ICSharpCore.Primitives" Version="0.2.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Pandas.NET\src\Pandas.NET\Pandas.Net.csproj" />
   </ItemGroup>
 </Project>
